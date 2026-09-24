@@ -48,6 +48,15 @@ FetchContent_Declare(
 	GIT_TAG v1.92.9
 )
 
+# System Vulkan headers may be older than vk-bootstrap expects (e.g. 1.3.275 on Ubuntu 24.04),
+# so fetch headers matching vk-bootstrap. This defines Vulkan::Headers before find_package(Vulkan).
+FetchContent_Declare(
+	Vulkan-Headers
+	GIT_REPOSITORY https://github.com/KhronosGroup/Vulkan-Headers.git
+	GIT_TAG v1.4.321
+)
+FetchContent_MakeAvailable(Vulkan-Headers)
+
 find_package(Vulkan REQUIRED)
 
 set(GLFW_LIBRARY_TYPE STATIC)
@@ -62,8 +71,11 @@ FetchContent_MakeAvailable(
 	imgui
 )
 
+target_compile_definitions(${PROJECT_NAME} PRIVATE GLFW_INCLUDE_NONE=)
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
 	glfw
+	Vulkan::Headers
 	Vulkan::Vulkan
 	vk-bootstrap::vk-bootstrap
 	GPUOpen::VulkanMemoryAllocator

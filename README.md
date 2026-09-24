@@ -49,10 +49,10 @@ cmake --build build-release --parallel # for release
 
 ### Running
 
-`build-*` directory will contain the executable in one of the subdirectories after successful build.
+`build-*` directory will contain the executable after successful build.
 
-For `msvc-{debug|release}` builds output subdirectory is set to `Debug` or `Release` respectively.
-For other configurations output subdirectory is set to `vulkan-starter-app`.
+For `msvc-{debug|release}` builds the executable is placed in the `Debug` or `Release` subdirectory respectively.
+For other configurations the executable `vulkan-starter-app` is placed directly in the `build-*` directory.
 
 **Make sure your working directory is set to the project root!**
 Project root is where this README file resides. Otherwise, the
