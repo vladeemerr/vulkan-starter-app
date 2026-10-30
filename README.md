@@ -9,9 +9,7 @@ This project uses C++20 standard and thus requires either of those compilers:
 - Clang 10
 - Microsoft Visual Studio 2019
 
-This is officially tested on *Windows* and *GNU/Linux platforms*, no *macOS* support yet.
-If you have a working macOS solution of this code, consider submitting a PR so others
-can build this example code without a hassle!
+This is officially tested on *Windows*, *GNU/Linux platforms and macOS (Apple Silicon)*
 
 <ins>**1. Downloading the repository**</ins>
 
@@ -58,6 +56,36 @@ For other configurations output subdirectory is set to `vulkan-starter-app`.
 Project root is where this README file resides. Otherwise, the
 code responsible for loading shaders or other resources from files will fail,
 because relative paths are used.
+
+### macOS
+
+Tested on a MacBook Air M2 (Apple Silicon) with macOS 26.
+
+<ins>**1. Install the tools**</ins>
+
+- Command Line Tools: `xcode-select --install` (full Xcode is not needed).
+- [Homebrew](https://brew.sh), then `brew install cmake ninja`.
+- Vulkan SDK: download [vulkansdk-macos-1.4.363.0.zip](https://sdk.lunarg.com/sdk/download/1.4.363.0/mac/vulkansdk-macos-1.4.363.0.zip), unzip it and run the installer. Make sure "System Global Installation" is selected, then you don't need any environment variables. The file is about 400 MB, if it downloads too slowly, try a VPN. Other versions are on https://vulkan.lunarg.com/sdk/home#mac
+- Or skip the SDK and install Vulkan with Homebrew: `brew install vulkan-headers vulkan-loader molten-vk shaderc vulkan-validationlayers`
+
+<ins>**2. Build and run**</ins>
+
+```bash
+cmake --preset debug
+cmake --build build-debug --parallel
+./build-debug/vulkan-starter-app
+```
+
+If CMake cannot find Ninja, use `cmake --preset debug -G "Unix Makefiles"` instead.
+
+If you installed Vulkan with Homebrew, run this in the same terminal before starting the program,
+otherwise it crashes:
+
+```bash
+export DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib
+```
+
+You may see `Validation Error` or `[mvk-error]` messages in the terminal and a pink window, this is normal.
 
 ### Compiling shaders
 
